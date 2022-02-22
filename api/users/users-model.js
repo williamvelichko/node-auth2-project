@@ -3,7 +3,8 @@ const db = require("../../data/db-config.js");
 function find() {
   return db("roles as r")
     .leftJoin("users as u", "u.role_id", "r.role_id")
-    .select("u.user_id", "username", "r.role_name");
+    .select("u.user_id", "username", "r.role_name")
+    .orderBy("u.user_id", "asc");
   /**
     You will need to join two tables.
     Resolves to an ARRAY with all users.

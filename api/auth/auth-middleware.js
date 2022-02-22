@@ -41,7 +41,7 @@ const only = (role_name) => (req, res, next) => {
   } else {
     next();
   }
-  next();
+
   /*
     If the user does not provide a token in the Authorization header with a role_name
     inside its payload matching the role_name passed to this function as its argument:
@@ -76,7 +76,7 @@ const checkUsernameExists = async (req, res, next) => {
 const validateRoleName = (req, res, next) => {
   if (!req.body.role_name || !req.body.role_name.trim()) {
     req.role_name = "student";
-    // console.log(role_name);
+
     next();
   } else if (req.body.role_name.trim() === "admin") {
     res.status(422).json({ message: `Role name can not be admin` });
