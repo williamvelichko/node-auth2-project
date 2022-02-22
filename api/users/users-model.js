@@ -27,8 +27,8 @@ function findBy(filter) {
   return db("roles as r")
     .leftJoin("users as u", "u.role_id", "r.role_id")
     .select("u.user_id", "username", "r.role_name", "u.password")
-    .where(filter)
-    .first();
+    .where(filter);
+
   /**
     You will need to join two tables.
     Resolves to an ARRAY with all users that match the filter condition.

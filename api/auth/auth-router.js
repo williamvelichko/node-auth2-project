@@ -6,13 +6,12 @@ const model = require("../users/users-model");
 const jwt = require("jsonwebtoken");
 
 router.post("/register", validateRoleName, (req, res, next) => {
-  let user = req.body;
-  const hash = bcrypt.hashSync(user.password, 8);
-
-  user.password = hash;
+  let { username, password } = req.body;
+  const { role_name } = req;
+  const hash = bcrypt.hashSync(password, 8);
 
   model
-    .add(user)
+    .add({ username, password: hash, role_name })
     .then((saved) => {
       res.status(201).json(saved);
     })
@@ -36,7 +35,7 @@ router.post("/login", checkUsernameExists, (req, res, next) => {
 
   model
     .findBy({ username })
-    .then((user) => {
+    .then(([user]) => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
 
